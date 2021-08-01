@@ -78,11 +78,12 @@ var RapidProxy = /** @class */ (function () {
             var acceptKey = typeof headers.accept !== "undefined" ? "accept" : "Accept";
             headers[acceptKey] = typeof headers[acceptKey] !== "undefined" ? smartToken + ';' + headers[acceptKey] : smartToken;
             RapidProxy.proxyCounter++;
+            var uniqueID = RapidProxy.uuidv4();
+            var uuid_1 = RapidProxy.proxyCounter + '-' + uniqueID;
             Object.keys(urls).map(function (key, index) {
-                var uuid = RapidProxy.proxyCounter + '-' + RapidProxy.uuidv4();
                 var urlParts = urls[key].split('?');
                 var queryStr = urlParts.length > 1 ? '?' + urlParts[1] : '';
-                urls[key] = RapidProxy.getProxyUrl() + '/uid-' + uuid + '/' + key + queryStr;
+                urls[key] = RapidProxy.getProxyUrl() + '/uid-' + uuid_1 + '/' + key + queryStr;
             });
         }
         else {

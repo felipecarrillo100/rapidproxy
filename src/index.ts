@@ -99,8 +99,9 @@ class RapidProxy {
             headers[acceptKey] = typeof headers[acceptKey] !== "undefined"? smartToken + ';' + headers[acceptKey] : smartToken;
 
             RapidProxy.proxyCounter++;
+            const uniqueID = RapidProxy.uuidv4()
+            const uuid = RapidProxy.proxyCounter + '-' + uniqueID;
             Object.keys(urls).map((key, index) => {
-                const uuid = RapidProxy.proxyCounter + '-' + RapidProxy.uuidv4();
                 const urlParts = urls[key].split('?');
                 const queryStr = urlParts.length > 1 ? '?' + urlParts[1] : '';
                 urls[key] = RapidProxy.getProxyUrl() + '/uid-' + uuid + '/' + key + queryStr;

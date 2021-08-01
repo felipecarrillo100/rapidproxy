@@ -1,6 +1,6 @@
 {
   "name": "rapidproxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A smart and easy to use Ajax proxy for Javascript applications.",
   "keywords": [
     "proxy",
