@@ -1,0 +1,31 @@
+{
+  "name": "rapidproxy",
+  "version": "1.0.0",
+  "description": "A smart and easy to use Ajax proxy for Javascript applications.",
+  "keywords": [
+    "proxy",
+    "ogc",
+    "post",
+    "get",
+    "patch",
+    "put"
+  ],
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipecarrillo100/rapidproxy"
+  },
+  "author": "Felipe Carrillo",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "node-fetch": "^2.6.1",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
+  }
+}
