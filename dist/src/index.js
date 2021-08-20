@@ -24,6 +24,12 @@ var RapidProxy = /** @class */ (function () {
     RapidProxy.getProxyUrl = function () {
         return RapidProxy.ProxyURL;
     };
+    RapidProxy.setProxyURL3D = function (url) {
+        RapidProxy.ProxyURL3D = url.replace(/\/$/, "");
+    };
+    RapidProxy.getProxyUrl3D = function () {
+        return RapidProxy.ProxyURL3D;
+    };
     RapidProxy.setProxySecuredKey = function (key) {
         RapidProxy.ProxySecuredKey = key;
     };
@@ -34,7 +40,7 @@ var RapidProxy = /** @class */ (function () {
      * generate
      * @param options
      */
-    RapidProxy.generate = function (options) {
+    RapidProxy.generate = function (options, is3D) {
         var Indexes = __assign({}, options.urls);
         Object.keys(Indexes).map(function (key, index) {
             Indexes[key] = Indexes[key].trim().split('?')[0];
@@ -83,7 +89,7 @@ var RapidProxy = /** @class */ (function () {
             Object.keys(urls).map(function (key, index) {
                 var urlParts = urls[key].split('?');
                 var queryStr = urlParts.length > 1 ? '?' + urlParts[1] : '';
-                urls[key] = RapidProxy.getProxyUrl() + '/uid-' + uuid_1 + '/' + key + queryStr;
+                urls[key] = (is3D ? RapidProxy.getProxyUrl3D() : RapidProxy.getProxyUrl()) + '/uid-' + uuid_1 + '/' + key + queryStr;
             });
         }
         else {
@@ -97,6 +103,21 @@ var RapidProxy = /** @class */ (function () {
             headers: headers,
         };
     };
+    RapidProxy.generate3D = function (options, is3D) {
+        var o = JSON.parse(JSON.stringify(options));
+        var keys = Object.keys(o.urls);
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
+            var index = o.urls[key].lastIndexOf("/tileset.json");
+            o.urls[key] = o.urls[key].substring(0, index);
+        }
+        var rp = RapidProxy.generate(o, true);
+        for (var _a = 0, keys_2 = keys; _a < keys_2.length; _a++) {
+            var key = keys_2[_a];
+            rp.urls[key] = rp.urls[key] + "/tileset.json";
+        }
+        return rp;
+    };
     RapidProxy.randomId = function () {
         return "" + Date.now();
     };
@@ -109,6 +130,7 @@ var RapidProxy = /** @class */ (function () {
     RapidProxy.TokenKey = "token";
     RapidProxy.proxyCounter = 0;
     RapidProxy.ProxyURL = "";
+    RapidProxy.ProxyURL3D = "";
     return RapidProxy;
 }());
 exports.default = RapidProxy;

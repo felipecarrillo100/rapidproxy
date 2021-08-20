@@ -24,6 +24,7 @@ class RapidProxy {
     private static proxyCounter = 0;
     private static ProxyURL: string = "";
     private static ProxySecuredKey: string;
+    private static ProxyURL3D: string = "";
 
     /**
      * Set the proxy url where the client will find the proxy at server side
@@ -35,6 +36,14 @@ class RapidProxy {
 
     public static getProxyUrl() {
         return RapidProxy.ProxyURL;
+    }
+
+    public static setProxyURL3D(url: string) {
+        RapidProxy.ProxyURL3D = url.replace(/\/$/, "");
+    }
+
+    public static getProxyUrl3D() {
+        return RapidProxy.ProxyURL3D;
     }
 
     public static setProxySecuredKey(key: string) {
@@ -49,7 +58,7 @@ class RapidProxy {
      * generate
      * @param options
      */
-    static generate(options: RapidProxyGenerateOptions): RapidProxyEndpoints {
+    static generate(options: RapidProxyGenerateOptions, is3D?: boolean ): RapidProxyEndpoints {
         const Indexes = { ...options.urls };
         Object.keys(Indexes).map((key, index) => {
             Indexes[key] = Indexes[key].trim().split('?')[0];
@@ -104,7 +113,8 @@ class RapidProxy {
             Object.keys(urls).map((key, index) => {
                 const urlParts = urls[key].split('?');
                 const queryStr = urlParts.length > 1 ? '?' + urlParts[1] : '';
-                urls[key] = RapidProxy.getProxyUrl() + '/uid-' + uuid + '/' + key + queryStr;
+
+                urls[key] = (is3D ? RapidProxy.getProxyUrl3D() : RapidProxy.getProxyUrl()) + '/uid-' + uuid + '/' + key + queryStr;
             });
         } else {
             const authorizationKey = typeof headers.authorization !== "undefined" ? "authorization" : "Authorization";
@@ -116,6 +126,20 @@ class RapidProxy {
             urls,
             headers,
         };
+    }
+
+    public static generate3D(options: RapidProxyGenerateOptions, is3D?: boolean ): RapidProxyEndpoints {
+        const o = JSON.parse(JSON.stringify(options));
+        const keys  = Object.keys(o.urls);
+        for(const key of keys) {
+            const index = o.urls[key].lastIndexOf("/tileset.json");
+            o.urls[key] = o.urls[key].substring(0, index);
+        }
+        const rp = RapidProxy.generate(o, true);
+        for(const key of keys) {
+            rp.urls[key] = rp.urls[key] + "/tileset.json";
+        }
+        return rp;
     }
 
     private static randomId(): string {

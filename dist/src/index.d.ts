@@ -28,19 +28,23 @@ declare class RapidProxy {
     private static proxyCounter;
     private static ProxyURL;
     private static ProxySecuredKey;
+    private static ProxyURL3D;
     /**
      * Set the proxy url where the client will find the proxy at server side
      * @param url {link string}
      */
     static setProxyURL(url: string): void;
     static getProxyUrl(): string;
+    static setProxyURL3D(url: string): void;
+    static getProxyUrl3D(): string;
     static setProxySecuredKey(key: string): void;
     static getProxySecuredKey(): string;
     /**
      * generate
      * @param options
      */
-    static generate(options: RapidProxyGenerateOptions): RapidProxyEndpoints;
+    static generate(options: RapidProxyGenerateOptions, is3D?: boolean): RapidProxyEndpoints;
+    static generate3D(options: RapidProxyGenerateOptions, is3D?: boolean): RapidProxyEndpoints;
     private static randomId;
     private static uuidv4;
 }
