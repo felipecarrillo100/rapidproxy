@@ -1,9 +1,10 @@
 declare type RapidProxyAuthenticationType = "Basic" | "Bearer" | "Vault";
 interface RapidProxyAuthentication {
     type: RapidProxyAuthenticationType;
-    "username"?: string;
-    "password"?: string;
-    "token"?: string;
+    username?: string;
+    password?: string;
+    token?: string;
+    borrow?: string;
 }
 interface RapidProxyEndpoints {
     urls: {

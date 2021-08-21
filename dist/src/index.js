@@ -66,6 +66,7 @@ var RapidProxy = /** @class */ (function () {
                     break;
                 case "Vault":
                     authorization.type = options.authentication.type;
+                    authorization.value = options.authentication.borrow;
                     break;
             }
         }

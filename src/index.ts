@@ -2,9 +2,10 @@ type RapidProxyAuthenticationType = "Basic" | "Bearer" | "Vault";
 
 interface RapidProxyAuthentication {
    type: RapidProxyAuthenticationType;
-   "username"?: string;
-   "password"?: string;
-    "token"?: string;
+   username?: string;
+   password?: string;
+   token?: string;
+   borrow?: string;
 }
 
 interface RapidProxyEndpoints {
@@ -84,6 +85,7 @@ class RapidProxy {
                     break;
                 case "Vault":
                     authorization.type = options.authentication.type;
+                    authorization.value = options.authentication.borrow;
                     break;
             }
         }
