@@ -11,6 +11,10 @@ A simple solution to these issues is to send the request through a proxy.
 Web browser ==> Proxy Server ==> Target Server
 ```
 
+The "Proxy Server" can be implemented in the programing language of your choice. For instance: PHP, NodeJS or Java.
+A Java implementation is available as a Maven library that you can easily add in to your projects, more info at this link:
+https://github.com/felipecarrillo100/rapidproxyserver
+
 ## How to install:
 npm install RapidProxy
 
